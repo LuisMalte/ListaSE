@@ -242,6 +242,18 @@ public class ListSEController {
 
     }
 
+    @GetMapping(path = "/movedPosition/{code}/{move}")
+    public ResponseEntity<ResponseDTO> movedPosition(@PathVariable  String code,  @PathVariable int move ) {
+
+
+        listSEService.getKids().AdvancePosition(code,move, listSEService.getKids());
+        return new ResponseEntity<>(
+                new ResponseDTO(200, "Se movio el niño"
+                        , null),
+                HttpStatus.OK);
+
+    }
+
 }
 
 

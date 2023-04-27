@@ -2,9 +2,12 @@ package co.edu.umanizales.tads.model;
 
 import lombok.Data;
 
+
 @Data
 public class ListSE {
     private Node head;
+    private int size=0;
+
 
     /*
     Algoritmo de adicionar al final
@@ -23,6 +26,7 @@ public class ListSE {
         metemos el niño en el costal y ese costal es la cabeza
      */
     public void add(Kid kid) {
+
         if (head != null) {
             Node temp = head;
             while (temp.getNext() != null) {
@@ -34,6 +38,8 @@ public class ListSE {
         } else {
             head = new Node(kid);
         }
+        size ++;
+
     }
 
     /* Adicionar al inicio
@@ -268,15 +274,13 @@ public class ListSE {
             ListSE tempList = new ListSE();
             Node temp = head;
 
-            while (temp.getData() != null) {
+            while (temp != null) {
                 if (temp.getData().getAge() != age) {
                     tempList.add(temp.getData());
                 }
-                if (temp.getNext() == null) {
-                    break;
-                } else {
-                    temp = temp.getNext();
-                }
+
+                temp = temp.getNext();
+
             }
             head = tempList.getHead();
         }
@@ -353,6 +357,25 @@ public class ListSE {
             }
             this.head = tempList.getHead();
         }
+    }
+    public void AdvancePosition (String id, int motion,ListSE listSE) {
+        if (head != null) {
+            Node temp = this.head;
+            ListSE tempList = new ListSE();
+            int count = 0;
+
+            while(temp!=null && temp.getData().getIdentification().equals(id)){
+
+                    temp = temp.getNext();
+                    count++;
+
+            }
+            int diferencia = motion-count;
+            listSE.deleteByIdentification(temp.getData().getIdentification());
+            listSE.addInPosition(diferencia,temp.getData());
+        }
+
+
     }
 
 }
