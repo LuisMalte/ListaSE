@@ -43,12 +43,53 @@ public class ListSEController {
 
     }
 
+   /* Location location = locationService.getLocationByCode(kidDTO.getCode());
+    Boolean sameKids  = listSEService.getKids().sameKids(new Kid(kidDTO.getIdentification(),
+            kidDTO.getName(), kidDTO.getAge(),
+            kidDTO.getGender(), location));
+        if(location == null){
+        return new ResponseEntity<>(new ResponseDTO(
+                404,"La ubicación no existe",
+                null), HttpStatus.OK);
+    } else if (sameKids.equals(false)) {
+        return new ResponseEntity<>(new ResponseDTO(
+                400,"ERROR Este niño ya ha sido agregado",
+                null), HttpStatus.OK);
+    }else {
+        listSEService.getKids().add(
+                new Kid(kidDTO.getIdentification(),
+                        kidDTO.getName(), kidDTO.getAge(),
+                        kidDTO.getGender(), location));
+        return new ResponseEntity<>(new ResponseDTO(
+                200, "Se ha adicionado el petacón",
+                null), HttpStatus.OK);
+    }Location location = locationService.getLocationByCode(kidDTO.getCode());
+    Boolean sameKids  = listSEService.getKids().sameKids(new Kid(kidDTO.getIdentification(),
+            kidDTO.getName(), kidDTO.getAge(),
+            kidDTO.getGender(), location));
+        if(location == null){
+        return new ResponseEntity<>(new ResponseDTO(
+                404,"La ubicación no existe",
+                null), HttpStatus.OK);
+    } else if (sameKids.equals(false)) {
+        return new ResponseEntity<>(new ResponseDTO(
+                400,"ERROR Este niño ya ha sido agregado",
+                null), HttpStatus.OK);
+    }else {
+        listSEService.getKids().add(
+                new Kid(kidDTO.getIdentification(),
+                        kidDTO.getName(), kidDTO.getAge(),
+                        kidDTO.getGender(), location));
+        return new ResponseEntity<>(new ResponseDTO(
+                200, "Se ha adicionado el petacón",
+                null), HttpStatus.OK);
+    }*/
 
 
 
     @GetMapping(path="/deleteKid/{code}")
     public ResponseEntity<ResponseDTO> deleteByCode(@PathVariable String code){
-        listSEService.getKids().deleteByIdentification(code); ;
+        listSEService.getKids().deleteByIdentification(code);
         return new ResponseEntity<>(new ResponseDTO(200,
                 "Niño borrado" ,null),
                 HttpStatus.OK);
@@ -230,7 +271,7 @@ public class ListSEController {
                 200,listSEService.getKids().averageAge(),
                 null), HttpStatus.OK);
     }
-    @GetMapping(path = "/sendBottomByLetter/{letter}")
+    @GetMapping(path = "/sendbottombyletter/{letter}")
     public ResponseEntity<ResponseDTO> sendbottom(@PathVariable char letter) {
 
 
@@ -242,11 +283,22 @@ public class ListSEController {
 
     }
 
-    @GetMapping(path = "/movedPosition/{code}/{move}")
+    @GetMapping(path = "/movedposition/{code}/{move}")
     public ResponseEntity<ResponseDTO> movedPosition(@PathVariable  String code,  @PathVariable int move ) {
 
 
         listSEService.getKids().AdvancePosition(code,move, listSEService.getKids());
+        return new ResponseEntity<>(
+                new ResponseDTO(200, "Se movio el niño"
+                        , null),
+                HttpStatus.OK);
+
+    }
+
+
+    @GetMapping(path = "/lostposition/{code}/{move}")
+    public ResponseEntity<ResponseDTO> LostPosition(@PathVariable  String code,  @PathVariable int move ) {
+        listSEService.getKids().LostPosition(code,move, listSEService.getKids());
         return new ResponseEntity<>(
                 new ResponseDTO(200, "Se movio el niño"
                         , null),

@@ -87,11 +87,11 @@ public class ListSE {
     public void addInPosition(int position, Kid kid) {
 
         if (head!=null) {
-            if (position == 0) {
+            if (position == 1) {
                 addToStart(kid);
             } else {
                 Node temp = head;
-                int cont =0;
+                int cont =1;
                 while (temp != null && cont<position-1)
                 {
                     temp = temp.getNext();
@@ -315,7 +315,7 @@ public class ListSE {
         }
         head = intercalateList.getHead();
     }
-    public int averageAge(){
+    public float averageAge(){
         if (head != null){
             Node temp = head;
             int contador = 0;
@@ -325,9 +325,9 @@ public class ListSE {
                 ages = ages + temp.getData().getAge();
                 temp = temp.getNext();
             }
-            int average = 0;
+            float average = 0;
             if (contador > 0) {
-                average = ages / contador;
+                average = ages / (float)contador;
             }
             return average;
         } else {
@@ -361,22 +361,43 @@ public class ListSE {
     public void AdvancePosition (String id, int motion,ListSE listSE) {
         if (head != null) {
             Node temp = this.head;
-            ListSE tempList = new ListSE();
-            int count = 0;
 
-            while(temp!=null && temp.getData().getIdentification().equals(id)){
+            int count = 1;
+
+            while(temp!=null && !temp.getData().getIdentification().equals(id)){
 
                     temp = temp.getNext();
                     count++;
 
             }
             int diferencia = motion-count;
+            Kid kidc = temp.getData();
             listSE.deleteByIdentification(temp.getData().getIdentification());
-            listSE.addInPosition(diferencia,temp.getData());
+            listSE.addInPosition(diferencia,kidc);
         }
-
-
     }
+
+    public void LostPosition (String id, int motion,ListSE listSE) {
+        if (head != null) {
+            Node temp = this.head;
+
+            int count = 1;
+
+            while(temp!=null && !temp.getData().getIdentification().equals(id)){
+
+                temp = temp.getNext();
+                count++;
+
+            }
+            int diferencia = motion+count-1;
+            if (temp!=null){
+            Kid kidc = temp.getData();
+            listSE.deleteByIdentification(temp.getData().getIdentification());
+            listSE.addInPosition(diferencia,kidc);
+            }
+        }
+    }
+
 
 }
 
