@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class KidsByLocationDTO {
+public class objetsByLocationDTO {
     private Location location;
     private int quantity;
 }

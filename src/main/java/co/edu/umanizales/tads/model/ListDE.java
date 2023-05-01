@@ -127,7 +127,7 @@ public class ListDE {
             ListDE tempList = new ListDE();
             NodeDE temp = head;
             while (temp != null) {
-                if (temp.getData().getGender()=='M'){
+                if (temp.getData().getSex()=='M'){
                     tempList.addToStart(temp.getData());
                 }else {
                     tempList.add(temp.getData());
@@ -144,10 +144,10 @@ public class ListDE {
         ListDE tempGirlsList = new ListDE();
         NodeDE temp = head;
         while (temp != null){
-            if(temp.getData().getGender()=='M'){
+            if(temp.getData().getSex()=='M'){
                 tempBoysList.add(temp.getData());
             }
-            if(temp.getData().getGender()=='F'){
+            if(temp.getData().getSex()=='F'){
                 tempGirlsList.add(temp.getData());
             }
             temp = temp.getNext();
@@ -277,6 +277,66 @@ public class ListDE {
             this.head = tempList.getHead();
         }
     }
+
+    public int getCountPetsByLocationCode(String code){
+        int count =0;
+        if( this.head!=null){
+            NodeDE temp = this.head;
+            while(temp != null){
+                if(temp.getData().getLocation().getCode().equals(code)){
+                    count++;
+                }
+                temp = temp.getNext();
+            }
+        }
+        return count;
+    }
+
+
+
+
+
+    public int getCountPetsByLocationCodeLimited(String code){
+        int count =0;
+        if( this.head!=null){
+            NodeDE temp = this.head;
+            while(temp != null){
+                if(temp.getData().getLocation().getCode().substring(0, 5).equals(code)){
+                    count++;
+                }
+                temp = temp.getNext();
+            }
+        }
+        return count;
+    }
+
+    public boolean samePet(Pet pet){
+
+        if( this.head!=null){
+            NodeDE temp = this.head;
+            while(temp != null){
+                if(temp.getData().getName().equals(pet.getName()) && temp.getData().getLocation().equals(pet.getLocation())){
+                    return false;
+                }
+                temp = temp.getNext();
+            }
+        }
+        return true;
+    }
+
+    public int rangeByAge(int min, int max) {
+        NodeDE temp = head;
+        int counter = 0;
+        while (temp !=  null) {
+            if (temp.getData().getAge() >= min && temp.getData().getAge() <= max) {
+                counter++;
+            }
+            temp= temp.getNext();
+        }
+
+        return counter;
+    }
+
 
 }
 

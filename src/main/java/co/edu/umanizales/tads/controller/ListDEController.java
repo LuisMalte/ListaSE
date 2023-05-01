@@ -1,17 +1,32 @@
 package co.edu.umanizales.tads.controller;
+import co.edu.umanizales.tads.controller.dto.objetsByLocationDTO;
+import co.edu.umanizales.tads.controller.dto.PetDTO;
+import co.edu.umanizales.tads.controller.dto.RangeAgeObjetsDTO;
 import co.edu.umanizales.tads.controller.dto.ResponseDTO;
+import co.edu.umanizales.tads.model.Location;
 import co.edu.umanizales.tads.model.Pet;
+import co.edu.umanizales.tads.model.RangesK;
 import co.edu.umanizales.tads.service.ListDEService;
+import co.edu.umanizales.tads.service.LocationService;
+import co.edu.umanizales.tads.service.RangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/listde")
 public class ListDEController {
     @Autowired
     private ListDEService listDEService;
+    @Autowired
+    private LocationService locationService;
+    @Autowired
+    private RangeService rangesService;
+
 
     @GetMapping
     public ResponseEntity<ResponseDTO> getPets() {
@@ -19,12 +34,35 @@ public class ListDEController {
                 200, listDEService.getPets().print(), null), HttpStatus.OK);
     }
 
-    @PostMapping(path = "/add")
+    /*@PostMapping(path = "/add")
     public ResponseEntity<ResponseDTO> add( @RequestBody Pet pet) {
         listDEService.getPets().add(pet);
         return new ResponseEntity<>(new ResponseDTO(200, "Mascota adicionada", null),
                 HttpStatus.OK);
 
+    }*/
+
+    @PostMapping (path = "/add")
+    public ResponseEntity<ResponseDTO> addKid(@RequestBody PetDTO petDTO){
+        Location location = locationService.getLocationByCode(petDTO.getCode());
+        Boolean sameKids  = listDEService.getPets().samePet(new Pet(petDTO.getIdentification(),
+                petDTO.getNameOwner(),petDTO.getName(), petDTO.getSex(),petDTO.getSpecies(),petDTO.getAge(),location));
+        if(location == null){
+            return new ResponseEntity<>(new ResponseDTO(
+                    404,"La ubicación no existe",
+                    null), HttpStatus.OK);
+        } else if (sameKids.equals(false)) {
+            return new ResponseEntity<>(new ResponseDTO(
+                    400,"ERROR Esta mascota ya ha sido agregado",
+                    null), HttpStatus.OK);
+        }else {
+            listDEService.getPets().add(
+                    new Pet(petDTO.getIdentification(),
+                            petDTO.getNameOwner(),petDTO.getName(), petDTO.getSex(),petDTO.getSpecies(),petDTO.getAge(),location));
+            return new ResponseEntity<>(new ResponseDTO(
+                    200, "Se ha adicionado la mascota",
+                    null), HttpStatus.OK);
+        }
     }
     @PostMapping(path = "/addtostar")
     public ResponseEntity<ResponseDTO> addToStar(@RequestBody Pet pet) {
@@ -117,6 +155,52 @@ public class ListDEController {
                 HttpStatus.OK);
 
     }
+
+    @GetMapping(path = "/petsbylocations")
+    public ResponseEntity<ResponseDTO> petsByLocations(){
+        List<objetsByLocationDTO> petsByLocationDTOList = new ArrayList<>();
+        for(Location loc: locationService.getLocations()){
+            int count = listDEService.getPets().getCountPetsByLocationCode(loc.getCode());
+            if(count>0){
+                petsByLocationDTOList.add(new objetsByLocationDTO(loc,count));
+            }
+        }
+        return new ResponseEntity<>(new ResponseDTO(
+                200,petsByLocationDTOList,
+                null), HttpStatus.OK);
+    }
+
+
+    @GetMapping(path = "/petsbydepartment")
+    public ResponseEntity<ResponseDTO>petsByDepartment (){
+        List<objetsByLocationDTO> objetsByLocationDTOList1 = new ArrayList<>();
+        for(Location loc: locationService.getLocations()){
+            int count = listDEService.getPets().getCountPetsByLocationCodeLimited(loc.getCode());
+            if(count>0){
+                objetsByLocationDTOList1.add(new objetsByLocationDTO(loc,count));
+            }
+        }
+        return new ResponseEntity<>(new ResponseDTO(
+                200, objetsByLocationDTOList1,
+                null), HttpStatus.OK);
+    }
+    @GetMapping(path = "/rangeagepets")
+
+    public ResponseEntity<ResponseDTO> getRangeByPets() {
+        List<RangeAgeObjetsDTO>  kidsRangeDTOList = new ArrayList<>();
+
+        for (RangesK i : rangesService.getRanges()) {
+            int quantity = listDEService.getPets().rangeByAge(i.getFrom(), i.getTo());
+            kidsRangeDTOList.add(new RangeAgeObjetsDTO(i, quantity));
+
+
+        }
+        return new ResponseEntity<>(new ResponseDTO(200, kidsRangeDTOList, null),
+                HttpStatus.OK);
+
+
+    }
+
 
 
 

@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class RangeAgeKidsDTO {
+public class RangeAgeObjetsDTO {
     private RangesK range;
     int quantity;
 
