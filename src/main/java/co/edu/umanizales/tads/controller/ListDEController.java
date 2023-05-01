@@ -92,7 +92,7 @@ public class ListDEController {
 
     @GetMapping(path = "/advanceposition/{code}/{move}")
     public ResponseEntity<ResponseDTO> advancePosition(@PathVariable String code, @PathVariable int move) {
-        listDEService.getPets().advancePosition(code, move, listDEService.getPets());
+        listDEService.getPets().advancePosition(code, move);
         return new ResponseEntity<>(
                 new ResponseDTO(200, "Se movio la mascota " + move + " posiciones adelante", null),
                 HttpStatus.OK);
@@ -100,7 +100,7 @@ public class ListDEController {
 
     @GetMapping(path = "/lostposition/{code}/{move}")
     public ResponseEntity<ResponseDTO> lostPosition(@PathVariable String code, @PathVariable int move) {
-        listDEService.getPets().lostPosition(code, move, listDEService.getPets());
+        listDEService.getPets().lostPosition(code, move);
         return new ResponseEntity<>(
                 new ResponseDTO(200, "la mascota peridio " + move + " posiciones", null),
                 HttpStatus.OK);

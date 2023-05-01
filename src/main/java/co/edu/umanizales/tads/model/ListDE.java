@@ -211,7 +211,7 @@ public class ListDE {
     }
 
 
-    public void advancePosition(String id, int motion, ListDE listDE) {
+    public void advancePosition(String id, int motion) {
         if (head != null) {
             NodeDE temp = this.head;
 
@@ -227,16 +227,16 @@ public class ListDE {
             if (temp != null) {
                 int diferencia = count- motion;
                 Pet petcopy = temp.getData();
-                listDE.deleteById(temp.getData().getIdentification());
+                deleteById(temp.getData().getIdentification());
                 if (diferencia > 0) {
-                    listDE.addInPosition(diferencia, petcopy);}
+                    addInPosition(diferencia, petcopy);}
                 else{
                     addToStart(petcopy);
                 }
             }
         }
     }
-    public void lostPosition (String id,int motion, ListDE listDE){
+    public void lostPosition (String id,int motion){
         if (head != null) {
             NodeDE temp = this.head;
 
@@ -251,8 +251,8 @@ public class ListDE {
             int sum = motion + count;
             if (temp != null) {
                 Pet petCopy = temp.getData();
-                listDE.deleteById(temp.getData().getIdentification());
-                listDE.addInPosition(sum, petCopy);
+                deleteById(temp.getData().getIdentification());
+                addInPosition(sum, petCopy);
             }
         }
     }
