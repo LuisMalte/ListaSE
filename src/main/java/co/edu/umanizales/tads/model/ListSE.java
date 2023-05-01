@@ -1,5 +1,6 @@
 package co.edu.umanizales.tads.model;
 
+import co.edu.umanizales.tads.controller.dto.ReportobjectsLocationSexDTO;
 import lombok.Data;
 
 
@@ -241,25 +242,21 @@ public class ListSE {
     }
 
 
-    public int kidsByCityByGenderAndAge(String code, char gender, int age) {
 
-        int count = 0;
-        if (this.head != null) {
+
+    public void getReportKidsByLocationGendersByAge(byte age, ReportobjectsLocationSexDTO report){
+        if(head !=null){
             Node temp = this.head;
-            while (temp != null) {
-                if (code.length() == 8) {
-                    if (temp.getData().getLocation().getCode().equals(code) &&
-                            temp.getData().getGender() == gender && temp.getData().getAge() > age) {
-                        count++;
-
-                    }
+            while(temp!=null){
+                if(temp.getData().getAge()>age){
+                    report.updateQuantity(
+                            temp.getData().getLocation().getName(),
+                            temp.getData().getGender());
                 }
-
                 temp = temp.getNext();
             }
         }
-        return count;
-}
+    }
     public void invert (){
         if(head != null) {
             ListSE tempList = new ListSE();

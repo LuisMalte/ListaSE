@@ -213,29 +213,7 @@ public class ListSEController {
 
 
 
-    @GetMapping(path = "/report/{age}")
-    public ResponseEntity<ResponseDTO> report(@PathVariable int age){
-        ArrayList<KidsByCityDTO> KidsByCityDTOList = new ArrayList<>();
-        ArrayList <KidsByGenderDTO> KidsByGenderDTOList = new ArrayList<>();
 
-        for(Location loc: locationService.getLocations()) {
-
-             int boys = (listSEService.getKids().kidsByCityByGenderAndAge(loc.getCode(),'m',age));
-             int girls = listSEService.getKids().kidsByCityByGenderAndAge(loc.getCode(),'f',age);
-
-           if(boys>0 || girls >0) {
-
-                KidsByGenderDTOList.add(new KidsByGenderDTO('m',boys));
-                KidsByGenderDTOList.add(new KidsByGenderDTO('f',girls));
-
-                int total =boys+girls;
-
-                KidsByCityDTOList.add(new KidsByCityDTO(loc.getName(), KidsByGenderDTOList, total));
-            }
-        }
-        return new ResponseEntity<>(new ResponseDTO(
-                200,KidsByCityDTOList,null),HttpStatus.OK);
-    }
 
     @GetMapping(path="/invert")
     public ResponseEntity<ResponseDTO> invert(){
@@ -304,6 +282,17 @@ public class ListSEController {
                         , null),
                 HttpStatus.OK);
 
+    }
+
+    @GetMapping(path = "/kidsbylocationgenders/{age}")
+    public ResponseEntity<ResponseDTO> getReportKisLocationGenders(@PathVariable byte age) {
+        ReportobjectsLocationSexDTO report =
+                new ReportobjectsLocationSexDTO(locationService.getLocationsByCodeSize(8));
+        listSEService.getKids()
+                .getReportKidsByLocationGendersByAge(age,report);
+        return new ResponseEntity<>(new ResponseDTO(
+                200,report,
+                null), HttpStatus.OK);
     }
 
 }

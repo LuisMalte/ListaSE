@@ -186,7 +186,7 @@ public class ListDEController {
     }
     @GetMapping(path = "/rangeagepets")
 
-    public ResponseEntity<ResponseDTO> getRangeByPets() {
+    public ResponseEntity<ResponseDTO> getRangeByKids() {
         List<RangeAgeObjetsDTO>  kidsRangeDTOList = new ArrayList<>();
 
         for (RangesK i : rangesService.getRanges()) {

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class KidsByGenderDTO {
+public class SexQuantityDTO {
 
     private  char gender;
     private int quantity;
