@@ -285,7 +285,7 @@ public class ListSEController {
     }
 
     @GetMapping(path = "/kidsbylocationgenders/{age}")
-    public ResponseEntity<ResponseDTO> getReportKisLocationGenders(@PathVariable byte age) {
+    public ResponseEntity<ResponseDTO> getReportKidsLocationGenders(@PathVariable byte age) {
         ReportobjectsLocationSexDTO report =
                 new ReportobjectsLocationSexDTO(locationService.getLocationsByCodeSize(8));
         listSEService.getKids()

@@ -22,8 +22,8 @@ public class ReportobjectsLocationSexDTO {
     public void updateQuantity(String city,char gender){
         for(LocationSexQuantityDTO loc: locationSexQuantityDTOS){
             if(loc.getCity().equals(city)){
-                for(SexQuantityDTO genderDTO: loc.getSex()){
-                    if(genderDTO.getGender()==gender){
+                for(SexQuantityDTO genderDTO: loc.getSexes()){
+                    if(genderDTO.getSex()==gender){
                         genderDTO.setQuantity(genderDTO.getQuantity()+1);
                         loc.setTotal(loc.getTotal()+1);
                         return;

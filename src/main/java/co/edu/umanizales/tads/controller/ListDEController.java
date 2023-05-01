@@ -1,8 +1,5 @@
 package co.edu.umanizales.tads.controller;
-import co.edu.umanizales.tads.controller.dto.objetsByLocationDTO;
-import co.edu.umanizales.tads.controller.dto.PetDTO;
-import co.edu.umanizales.tads.controller.dto.RangeAgeObjetsDTO;
-import co.edu.umanizales.tads.controller.dto.ResponseDTO;
+import co.edu.umanizales.tads.controller.dto.*;
 import co.edu.umanizales.tads.model.Location;
 import co.edu.umanizales.tads.model.Pet;
 import co.edu.umanizales.tads.model.RangesK;
@@ -199,6 +196,17 @@ public class ListDEController {
                 HttpStatus.OK);
 
 
+    }
+
+    @GetMapping(path = "/petsbylocationsexes/{age}")
+    public ResponseEntity<ResponseDTO> getReportPetsLocationSexes(@PathVariable byte age) {
+        ReportobjectsLocationSexDTO report =
+                new ReportobjectsLocationSexDTO(locationService.getLocationsByCodeSize(8));
+        listDEService.getPets()
+                .getReportPetsByLocationGendersByAge(age,report);
+        return new ResponseEntity<>(new ResponseDTO(
+                200,report,
+                null), HttpStatus.OK);
     }
 
 

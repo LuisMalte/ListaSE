@@ -1,6 +1,7 @@
 package co.edu.umanizales.tads.model;
 
 
+import co.edu.umanizales.tads.controller.dto.ReportobjectsLocationSexDTO;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -335,6 +336,21 @@ public class ListDE {
         }
 
         return counter;
+    }
+
+
+    public void getReportPetsByLocationGendersByAge(byte age, ReportobjectsLocationSexDTO report){
+        if(head !=null){
+            NodeDE temp = this.head;
+            while(temp!=null){
+                if(temp.getData().getAge()>age){
+                    report.updateQuantity(
+                            temp.getData().getLocation().getName(),
+                            temp.getData().getSex());
+                }
+                temp = temp.getNext();
+            }
+        }
     }
 
 
