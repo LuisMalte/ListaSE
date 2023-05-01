@@ -287,7 +287,7 @@ public class ListSEController {
     public ResponseEntity<ResponseDTO> movedPosition(@PathVariable  String code,  @PathVariable int move ) {
 
 
-        listSEService.getKids().AdvancePosition(code,move, listSEService.getKids());
+        listSEService.getKids().advancePosition(code,move, listSEService.getKids());
         return new ResponseEntity<>(
                 new ResponseDTO(200, "Se movio el niño"
                         , null),
@@ -298,7 +298,7 @@ public class ListSEController {
 
     @GetMapping(path = "/lostposition/{code}/{move}")
     public ResponseEntity<ResponseDTO> LostPosition(@PathVariable  String code,  @PathVariable int move ) {
-        listSEService.getKids().LostPosition(code,move, listSEService.getKids());
+        listSEService.getKids().LostPosition(code,move);
         return new ResponseEntity<>(
                 new ResponseDTO(200, "Se movio el niño"
                         , null),

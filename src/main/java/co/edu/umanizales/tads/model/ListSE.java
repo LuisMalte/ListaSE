@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class ListSE {
     private Node head;
-    private int size=0;
+    private int size=1;
 
 
     /*
@@ -25,6 +25,8 @@ public class ListSE {
     no
         metemos el niño en el costal y ese costal es la cabeza
      */
+
+
     public void add(Kid kid) {
 
         if (head != null) {
@@ -259,14 +261,14 @@ public class ListSE {
         return count;
 }
     public void invert (){
-        if(this.head != null) {
+        if(head != null) {
             ListSE tempList = new ListSE();
-            Node temp = this.head;
+            Node temp = head;
             while (temp != null) {
                 tempList.addToStart(temp.getData());
                 temp = temp.getNext();
             }
-            this.head = tempList.getHead();
+            head = tempList.getHead();
         }
     }
     public void deleteKidsByAge(byte age) {
@@ -358,45 +360,52 @@ public class ListSE {
             this.head = tempList.getHead();
         }
     }
-    public void AdvancePosition (String id, int motion,ListSE listSE) {
+    public void advancePosition(String id, int motion, ListSE listSE) {
         if (head != null) {
             Node temp = this.head;
 
             int count = 1;
 
-            while(temp!=null && !temp.getData().getIdentification().equals(id)){
-
-                    temp = temp.getNext();
-                    count++;
-
-            }
-            int diferencia = motion-count;
-            Kid kidc = temp.getData();
-            listSE.deleteByIdentification(temp.getData().getIdentification());
-            listSE.addInPosition(diferencia,kidc);
-        }
-    }
-
-    public void LostPosition (String id, int motion,ListSE listSE) {
-        if (head != null) {
-            Node temp = this.head;
-
-            int count = 1;
-
-            while(temp!=null && !temp.getData().getIdentification().equals(id)){
+            while (temp != null && !temp.getData().getIdentification().equals(id)) {
 
                 temp = temp.getNext();
                 count++;
 
             }
-            int diferencia = motion+count-1;
-            if (temp!=null){
-            Kid kidc = temp.getData();
-            listSE.deleteByIdentification(temp.getData().getIdentification());
-            listSE.addInPosition(diferencia,kidc);
+
+            if (temp != null) {
+                int diferencia = count- motion;
+                Kid kidc = temp.getData();
+                listSE.deleteByIdentification(temp.getData().getIdentification());
+                if (diferencia > 0) {
+                listSE.addInPosition(diferencia, kidc);}
+                else{
+                    addToStart(kidc);
+                }
             }
         }
     }
+
+        public void LostPosition (String id,int motion){
+            if (head != null) {
+                Node temp = this.head;
+
+                int count = 1;
+
+                while (temp != null && !temp.getData().getIdentification().equals(id)) {
+
+                    temp = temp.getNext();
+                    count++;
+
+                }
+                int sum = motion + count;
+                if (temp != null) {
+                    Kid kidc = temp.getData();
+                    deleteByIdentification(temp.getData().getIdentification());
+                    addInPosition(sum, kidc);
+                }
+            }
+        }
 
 
 }
