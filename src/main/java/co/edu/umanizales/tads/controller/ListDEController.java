@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ public class ListDEController {
     public ResponseEntity<ResponseDTO> addKid(@RequestBody @Valid PetDTO petDTO){
         Location location = locationService.getLocationByCode(petDTO.getCode());
         Boolean sameKids  = listDEService.getPets().samePet(new Pet(petDTO.getIdentification(),
-                petDTO.getNameOwner(),petDTO.getName(), petDTO.getSex(),petDTO.getSpecies(),petDTO.getAge(),location));
+                petDTO.getNameOwner(),petDTO.getName(), petDTO.getSex().charAt(0),petDTO.getSpecies(),petDTO.getAge(),location));
         if(location == null){
             return new ResponseEntity<>(new ResponseDTO(
                     404,"La ubicación no existe",
@@ -57,7 +59,7 @@ public class ListDEController {
         }else {
             listDEService.getPets().add(
                     new Pet(petDTO.getIdentification(),
-                            petDTO.getNameOwner(),petDTO.getName(), petDTO.getSex(),petDTO.getSpecies(),petDTO.getAge(),location));
+                            petDTO.getNameOwner(),petDTO.getName(), petDTO.getSex().charAt(0),petDTO.getSpecies(),petDTO.getAge(),location));
             return new ResponseEntity<>(new ResponseDTO(
                     200, "Se ha adicionado la mascota",
                     null), HttpStatus.OK);
@@ -212,6 +214,15 @@ public class ListDEController {
                 null), HttpStatus.OK);
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ResponseDTO> handleValidationException(MethodArgumentNotValidException ex) {
+        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
+        List<ErrorDTO> errors = new ArrayList<>();
+        for (FieldError fieldError : fieldErrors) {
+            errors.add(new ErrorDTO(HttpStatus.BAD_REQUEST.value(), fieldError.getDefaultMessage()));
+        }
+        return new ResponseEntity<>(new ResponseDTO(HttpStatus.BAD_REQUEST.value(), null, errors), HttpStatus.BAD_REQUEST);
+    }
 
 
 

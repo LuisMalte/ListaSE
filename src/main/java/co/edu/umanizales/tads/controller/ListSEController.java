@@ -45,54 +45,13 @@ public class ListSEController {
     }
 
     @PostMapping(path = "/addtoposition/{position}")
-    public ResponseEntity<ResponseDTO> addBoyByPosition(@PathVariable int position, @RequestBody Kid boy) {
+    public ResponseEntity<ResponseDTO> addBoyByPosition(@PathVariable int position,  @RequestBody @Valid Kid boy) {
         listSEService.getKids().addInPosition(position, boy);
         return new ResponseEntity<>(new ResponseDTO(200, "Niño adicionado", null),
                 HttpStatus.OK);
 
     }
 
-   /* Location location = locationService.getLocationByCode(kidDTO.getCode());
-    Boolean samePet  = listSEService.getKids().samePet(new Kid(kidDTO.getIdentification(),
-            kidDTO.getName(), kidDTO.getAge(),
-            kidDTO.getGender(), location));
-        if(location == null){
-        return new ResponseEntity<>(new ResponseDTO(
-                404,"La ubicación no existe",
-                null), HttpStatus.OK);
-    } else if (samePet.equals(false)) {
-        return new ResponseEntity<>(new ResponseDTO(
-                400,"ERROR Este niño ya ha sido agregado",
-                null), HttpStatus.OK);
-    }else {
-        listSEService.getKids().add(
-                new Kid(kidDTO.getIdentification(),
-                        kidDTO.getName(), kidDTO.getAge(),
-                        kidDTO.getGender(), location));
-        return new ResponseEntity<>(new ResponseDTO(
-                200, "Se ha adicionado el petacón",
-                null), HttpStatus.OK);
-    }Location location = locationService.getLocationByCode(kidDTO.getCode());
-    Boolean samePet  = listSEService.getKids().samePet(new Kid(kidDTO.getIdentification(),
-            kidDTO.getName(), kidDTO.getAge(),
-            kidDTO.getGender(), location));
-        if(location == null){
-        return new ResponseEntity<>(new ResponseDTO(
-                404,"La ubicación no existe",
-                null), HttpStatus.OK);
-    } else if (samePet.equals(false)) {
-        return new ResponseEntity<>(new ResponseDTO(
-                400,"ERROR Este niño ya ha sido agregado",
-                null), HttpStatus.OK);
-    }else {
-        listSEService.getKids().add(
-                new Kid(kidDTO.getIdentification(),
-                        kidDTO.getName(), kidDTO.getAge(),
-                        kidDTO.getGender(), location));
-        return new ResponseEntity<>(new ResponseDTO(
-                200, "Se ha adicionado el petacón",
-                null), HttpStatus.OK);
-    }*/
 
 
 
@@ -108,7 +67,7 @@ public class ListSEController {
 
 
     @PostMapping(path = "/addtostar")
-    public ResponseEntity<ResponseDTO> addToStar(@RequestBody Kid kid) {
+    public ResponseEntity<ResponseDTO> addToStar(@RequestBody @Valid Kid kid) {
         listSEService.getKids().addToStart(kid);
         return new ResponseEntity<>(new ResponseDTO(200, "Niño adicionado al inicio", null),
                 HttpStatus.OK);
@@ -307,7 +266,6 @@ public class ListSEController {
                 200,report,
                 null), HttpStatus.OK);
     }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ResponseDTO> handleValidationException(MethodArgumentNotValidException ex) {
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
@@ -317,6 +275,9 @@ public class ListSEController {
         }
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.BAD_REQUEST.value(), null, errors), HttpStatus.BAD_REQUEST);
     }
+
+
+
 
 }
 

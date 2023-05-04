@@ -11,13 +11,9 @@ public class Pet {
 
     private String identification;
     private String nameOwner;
-    @NotNull
-    @NotEmpty
     private String name;
     private char sex;
     private String species;
-
-    @Max(15) @Min(0)
     private byte age;
     private Location location;
 
