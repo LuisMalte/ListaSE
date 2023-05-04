@@ -6,7 +6,9 @@ import co.edu.umanizales.tads.model.RangesK;
 import co.edu.umanizales.tads.service.ListDEService;
 import co.edu.umanizales.tads.service.LocationService;
 import co.edu.umanizales.tads.service.RangeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +42,7 @@ public class ListDEController {
     }*/
 
     @PostMapping (path = "/add")
-    public ResponseEntity<ResponseDTO> addKid(@RequestBody PetDTO petDTO){
+    public ResponseEntity<ResponseDTO> addKid(@RequestBody @Valid PetDTO petDTO){
         Location location = locationService.getLocationByCode(petDTO.getCode());
         Boolean sameKids  = listDEService.getPets().samePet(new Pet(petDTO.getIdentification(),
                 petDTO.getNameOwner(),petDTO.getName(), petDTO.getSex(),petDTO.getSpecies(),petDTO.getAge(),location));
@@ -61,6 +63,7 @@ public class ListDEController {
                     null), HttpStatus.OK);
         }
     }
+
     @PostMapping(path = "/addtostar")
     public ResponseEntity<ResponseDTO> addToStar(@RequestBody Pet pet) {
         listDEService.getPets().addToStart(pet);

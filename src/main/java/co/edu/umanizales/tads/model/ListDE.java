@@ -346,7 +346,7 @@ public class ListDE {
                 if(temp.getData().getAge()>age){
                     report.updateQuantity(
                             temp.getData().getLocation().getName(),
-                            temp.getData().getSex());
+                            temp.getData().getSex() );
                 }
                 temp = temp.getNext();
             }

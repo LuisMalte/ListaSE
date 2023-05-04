@@ -7,16 +7,25 @@ import co.edu.umanizales.tads.model.RangesK;
 import co.edu.umanizales.tads.service.ListSEService;
 import co.edu.umanizales.tads.service.LocationService;
 import co.edu.umanizales.tads.service.RangeService;
+import jakarta.validation.Valid;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+
+
 @RequestMapping(path = "/listse")
+
 public class ListSEController {
     @Autowired
     private ListSEService listSEService;
@@ -157,12 +166,13 @@ public class ListSEController {
     }
 
 
+
     @PostMapping (path = "/add")
-    public ResponseEntity<ResponseDTO> addKid(@RequestBody KidDTO kidDTO){
+    public ResponseEntity<ResponseDTO> addKid(@RequestBody @Valid KidDTO kidDTO){
         Location location = locationService.getLocationByCode(kidDTO.getCode());
         Boolean sameKids  = listSEService.getKids().sameKids(new Kid(kidDTO.getIdentification(),
                 kidDTO.getName(), kidDTO.getAge(),
-                kidDTO.getGender(), location));
+                kidDTO.getGender().charAt(0), location));
         if(location == null){
             return new ResponseEntity<>(new ResponseDTO(
                     404,"La ubicación no existe",
@@ -175,7 +185,7 @@ public class ListSEController {
             listSEService.getKids().add(
                     new Kid(kidDTO.getIdentification(),
                             kidDTO.getName(), kidDTO.getAge(),
-                            kidDTO.getGender(), location));
+                            kidDTO.getGender().charAt(0), location));
             return new ResponseEntity<>(new ResponseDTO(
                     200, "Se ha adicionado el petacón",
                     null), HttpStatus.OK);
@@ -210,6 +220,9 @@ public class ListSEController {
                 200, objetsByLocationDTOList1,
                 null), HttpStatus.OK);
     }
+
+
+
 
 
 
@@ -293,6 +306,16 @@ public class ListSEController {
         return new ResponseEntity<>(new ResponseDTO(
                 200,report,
                 null), HttpStatus.OK);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ResponseDTO> handleValidationException(MethodArgumentNotValidException ex) {
+        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
+        List<ErrorDTO> errors = new ArrayList<>();
+        for (FieldError fieldError : fieldErrors) {
+            errors.add(new ErrorDTO(HttpStatus.BAD_REQUEST.value(), fieldError.getDefaultMessage()));
+        }
+        return new ResponseEntity<>(new ResponseDTO(HttpStatus.BAD_REQUEST.value(), null, errors), HttpStatus.BAD_REQUEST);
     }
 
 }
