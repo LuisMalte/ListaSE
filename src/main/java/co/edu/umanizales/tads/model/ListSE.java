@@ -301,7 +301,9 @@ public class ListSE {
             if(temp==null) throw new ListSEException("ERROR: La lista esta vacía");
             while (temp != null) {
                 if (temp.getData().getAge() != age) {
+                    size=1;
                     tempList.add(temp.getData());
+                    size++;
                 }else {
                     tempList2.add(temp.getData());
                 }
