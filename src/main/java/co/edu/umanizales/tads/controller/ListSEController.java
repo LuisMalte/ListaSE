@@ -1,7 +1,7 @@
 package co.edu.umanizales.tads.controller;
 
 import co.edu.umanizales.tads.controller.dto.*;
-import co.edu.umanizales.tads.exception.ListSEException;
+import co.edu.umanizales.tads.exception.ListException;
 import co.edu.umanizales.tads.model.Kid;
 import co.edu.umanizales.tads.model.Location;
 import co.edu.umanizales.tads.model.RangesK;
@@ -49,7 +49,7 @@ public class ListSEController {
     public ResponseEntity<ResponseDTO> addBoyByPosition(@PathVariable int position,  @RequestBody @Valid Kid boy) {
         try {
             listSEService.getKids().addInPosition(position, boy);
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -65,7 +65,7 @@ public class ListSEController {
 
         try {
             listSEService.getKids().deleteByIdentification(code);
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -83,7 +83,7 @@ public class ListSEController {
         try {
             listSEService.getKids().addToStart(kid);
 
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -106,7 +106,7 @@ public class ListSEController {
     public ResponseEntity<ResponseDTO> getKidsByGender()  {
         try {
             listSEService.getKids().kidByGender();
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -144,7 +144,7 @@ public class ListSEController {
                 kidsRangeDTOList.add(new RangeAgeObjetsDTO(i, quantity));
 
             }
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -172,7 +172,7 @@ public class ListSEController {
                     new Kid(kidDTO.getIdentification(),
                             kidDTO.getName(), kidDTO.getAge(),
                             kidDTO.getGender().charAt(0), location));
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -192,7 +192,7 @@ public class ListSEController {
                     objetsByLocationDTOList.add(new objetsByLocationDTO(loc,count));
                 }
             }
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -215,7 +215,7 @@ public class ListSEController {
                     objetsByLocationDTOList1.add(new objetsByLocationDTO(loc,count));
                 }
             }
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -238,7 +238,7 @@ public class ListSEController {
         try {
             listSEService.getKids().invert();
 
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -251,10 +251,10 @@ public class ListSEController {
     }
 
     @GetMapping(path="/deleteKidsbyage/{age}")
-    public ResponseEntity<ResponseDTO> deleteKidsbyage(@PathVariable byte age) throws ListSEException {
+    public ResponseEntity<ResponseDTO> deleteKidsbyage(@PathVariable byte age) throws ListException {
         try {
             listSEService.getKids().deleteKidsByAge(age);
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -266,10 +266,10 @@ public class ListSEController {
     }
 
     @GetMapping(path="/intercalatebygender")
-    public ResponseEntity<ResponseDTO> intercalatebygender() throws ListSEException {
+    public ResponseEntity<ResponseDTO> intercalatebygender() throws ListException {
         try {
             listSEService.getKids().intercalateByGender();
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -284,7 +284,7 @@ public class ListSEController {
         float averageAge= (float) 0;
         try {
             averageAge= listSEService.getKids().averageAge();
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -296,11 +296,11 @@ public class ListSEController {
                 null), HttpStatus.OK);
     }
         @GetMapping(path = "/sendbottombyletter/{letter}")
-    public ResponseEntity<ResponseDTO> sendbottom(@PathVariable char letter) throws ListSEException {
+    public ResponseEntity<ResponseDTO> sendbottom(@PathVariable char letter) throws ListException {
 
         try {
             listSEService.getKids().sendBottomByLetter(letter);
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -317,11 +317,11 @@ public class ListSEController {
     }
 
     @GetMapping(path = "/movedposition/{code}/{move}")
-    public ResponseEntity<ResponseDTO> movedPosition(@PathVariable  String code,  @PathVariable int move ) throws ListSEException {
+    public ResponseEntity<ResponseDTO> movedPosition(@PathVariable  String code,  @PathVariable int move ) throws ListException {
 
         try {
             listSEService.getKids().advancePosition(code,move, listSEService.getKids());
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -338,10 +338,10 @@ public class ListSEController {
 
 
     @GetMapping(path = "/lostposition/{code}/{move}")
-    public ResponseEntity<ResponseDTO> LostPosition(@PathVariable  String code,  @PathVariable int move ) throws ListSEException {
+    public ResponseEntity<ResponseDTO> LostPosition(@PathVariable  String code,  @PathVariable int move ) throws ListException {
         try {
             listSEService.getKids().LostPosition(code,move);
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -359,7 +359,7 @@ public class ListSEController {
         ReportobjectsLocationSexDTO report = new ReportobjectsLocationSexDTO(locationService.getLocationsByCodeSize(8));
         try {
             listSEService.getKids().getReportKidsByLocationGendersByAge(age, report);
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409, e.getMessage(),
                     null), HttpStatus.OK);

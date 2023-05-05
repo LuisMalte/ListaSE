@@ -1,7 +1,6 @@
 package co.edu.umanizales.tads.controller;
 import co.edu.umanizales.tads.controller.dto.*;
-import co.edu.umanizales.tads.exception.ListSEException;
-import co.edu.umanizales.tads.model.Kid;
+import co.edu.umanizales.tads.exception.ListException;
 import co.edu.umanizales.tads.model.Location;
 import co.edu.umanizales.tads.model.Pet;
 import co.edu.umanizales.tads.model.RangesK;
@@ -10,7 +9,6 @@ import co.edu.umanizales.tads.service.LocationService;
 import co.edu.umanizales.tads.service.RangeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -32,11 +30,11 @@ public class ListDEController {
 
 
     @GetMapping
-    public ResponseEntity<ResponseDTO> getPets() throws ListSEException {
+    public ResponseEntity<ResponseDTO> getPets() throws ListException {
         try {
             listDEService.getPets().print();
 
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(
                     409,e.getMessage(),
                     null), HttpStatus.OK);
@@ -66,7 +64,7 @@ public class ListDEController {
                 listDEService.getPets().add(
                         new Pet(petDTO.getIdentification(),
                                 petDTO.getNameOwner(),petDTO.getName(), petDTO.getSex().charAt(0),petDTO.getSpecies(),petDTO.getAge(),location));
-            } catch (ListSEException e) {
+            } catch (ListException e) {
                 return new ResponseEntity<>(new ResponseDTO(
                         409,e.getMessage(),
                         null), HttpStatus.OK);
@@ -91,17 +89,17 @@ public class ListDEController {
     public ResponseEntity<ResponseDTO> deletePet(@PathVariable String code) {
         try {
             listDEService.getPets().deleteById(code);
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(409, e.getMessage(), null), HttpStatus.OK);
         }
         return new ResponseEntity<>(new ResponseDTO(200, "Se borró la mascota con el Id " + code, null), HttpStatus.OK);
     }
 
     @PostMapping(path = "/addtoposition/{position}")
-    public ResponseEntity<ResponseDTO> addInPosition(@RequestBody Pet pet, @PathVariable int position) throws ListSEException {
+    public ResponseEntity<ResponseDTO> addInPosition(@RequestBody Pet pet, @PathVariable int position) throws ListException {
         try {
             listDEService.getPets().addInPosition(position,pet);
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(409, e.getMessage(), null), HttpStatus.OK);
         }
         return new ResponseEntity<>(new ResponseDTO(200, "Mascota adicionada en la posición "+position , null),
@@ -115,7 +113,7 @@ public class ListDEController {
         try {
             listDEService.getPets().invert();
 
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(409, e.getMessage(), null), HttpStatus.OK);
         }
         return new ResponseEntity<>(new ResponseDTO(
@@ -123,11 +121,11 @@ public class ListDEController {
     }
 
     @GetMapping (path = "/getfirstmale")
-    public ResponseEntity<ResponseDTO> getFirstMale() throws ListSEException {
+    public ResponseEntity<ResponseDTO> getFirstMale() throws ListException {
         try {
             listDEService.getPets().getfirstMale();
 
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(409, e.getMessage(), null), HttpStatus.OK);
         }
         return new ResponseEntity<>(new ResponseDTO(
@@ -135,13 +133,13 @@ public class ListDEController {
     }
 
     @GetMapping(path="/intercalatebysex")
-    public ResponseEntity<ResponseDTO> intercalateBySex() throws ListSEException {
+    public ResponseEntity<ResponseDTO> intercalateBySex() throws ListException {
 
         try {
             listDEService.getPets().intercalateBySex();
 
 
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(409, e.getMessage(), null), HttpStatus.OK);
         }
 
@@ -151,12 +149,12 @@ public class ListDEController {
     }
 
     @GetMapping(path="/deletepetsbyage/{age}")
-    public ResponseEntity<ResponseDTO> deletePetsByAge(@PathVariable byte age) throws ListSEException {
+    public ResponseEntity<ResponseDTO> deletePetsByAge(@PathVariable byte age) throws ListException {
 
         try {
             listDEService.getPets().deletePetsByAge(age);
 
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(409, e.getMessage(), null), HttpStatus.OK);
         }
         return new ResponseEntity<>(new ResponseDTO(
@@ -165,11 +163,11 @@ public class ListDEController {
     }
 
     @GetMapping(path="/averageage")
-    public ResponseEntity<ResponseDTO> averageAge() throws ListSEException {
+    public ResponseEntity<ResponseDTO> averageAge() throws ListException {
         try {
             listDEService.getPets().averageAge();
 
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(409, e.getMessage(), null), HttpStatus.OK);
         }
 
@@ -179,11 +177,11 @@ public class ListDEController {
     }
 
     @GetMapping(path = "/advanceposition/{code}/{move}")
-    public ResponseEntity<ResponseDTO> advancePosition(@PathVariable String code, @PathVariable int move) throws ListSEException {
+    public ResponseEntity<ResponseDTO> advancePosition(@PathVariable String code, @PathVariable int move) throws ListException {
         try {
             listDEService.getPets().advancePosition(code, move);
 
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(409, e.getMessage(), null), HttpStatus.OK);
         }
         return new ResponseEntity<>(
@@ -192,11 +190,11 @@ public class ListDEController {
     }
 
     @GetMapping(path = "/lostposition/{code}/{move}")
-    public ResponseEntity<ResponseDTO> lostPosition(@PathVariable String code, @PathVariable int move) throws ListSEException {
+    public ResponseEntity<ResponseDTO> lostPosition(@PathVariable String code, @PathVariable int move) throws ListException {
         try {
             listDEService.getPets().lostPosition(code, move);
 
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(409, e.getMessage(), null), HttpStatus.OK);
         }
         return new ResponseEntity<>(
@@ -205,11 +203,11 @@ public class ListDEController {
     }
 
     @GetMapping(path = "/sendbottombyletter/{letter}")
-    public ResponseEntity<ResponseDTO> sendbottom(@PathVariable char letter) throws ListSEException {
+    public ResponseEntity<ResponseDTO> sendbottom(@PathVariable char letter) throws ListException {
         try {
             listDEService.getPets().sendBottomByLetter(letter);
 
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(409, e.getMessage(), null), HttpStatus.OK);
         }
 
@@ -232,7 +230,7 @@ public class ListDEController {
                 }
             }
 
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(409, e.getMessage(), null), HttpStatus.OK);
         }
 
@@ -253,7 +251,7 @@ public class ListDEController {
                 }
             }
 
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(409, e.getMessage(), null), HttpStatus.OK);
         }
 
@@ -274,7 +272,7 @@ public class ListDEController {
 
             }
 
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(409, e.getMessage(), null), HttpStatus.OK);
         }
 
@@ -292,7 +290,7 @@ public class ListDEController {
             listDEService.getPets()
                     .getReportPetsByLocationGendersByAge(age,report);
 
-        } catch (ListSEException e) {
+        } catch (ListException e) {
             return new ResponseEntity<>(new ResponseDTO(409, e.getMessage(), null), HttpStatus.OK);
         }
 
