@@ -214,7 +214,7 @@ public class ListDE {
                 temp = temp.getNext();
 
             }
-        if  (count ==0 || countFamle ==0 ) throw new ListSEException("ERROR: solo hay niños de un genero");
+        if  (count ==0 || countFamle ==0 ) throw new ListSEException("ERROR: solo hay mascotas de un solo sexo");
 
         head = tempList.getHead();
 
