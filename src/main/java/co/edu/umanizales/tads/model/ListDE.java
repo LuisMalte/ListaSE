@@ -76,14 +76,16 @@ public class ListDE {
     /*Algoritmo para eliminar por id primero verifico si la lista está vacía si está
      vacía lanzo una excepción indicando que la lista está vacía si la lista no está
       vacía, verifico si la cabeza coincide con el código a eliminar si es así,
-       elimino el primer elemento y actualizo la cabeza de la listasi el primer elemento
+       elimino el primer elemento y actualizo la cabeza de la lista haciendo qeu sea el siguente si la cabeza no es nulo
+        le digo que suelte el anterior
+       si la cabeza no
        no coincide, recorro la lista buscando un elemento con el código a eliminari encuentro
         un elemento con el código a eliminar, verifico si tiene un nodo anterior y si tiene un
          nodo siguiente. Si tiene un nodo anterior, establezco el siguiente nodo del nodo anterior
           al siguiente nodo del elemento a eliminar. Si tiene un nodo siguiente, establezco el
-           nodo anterior del nodo siguiente al nodo anterior del elemento a eliminar final mentedecremento
-           el tamaño de la lista y cuento la cantidad de elementos eliminados con el código dadosino
-           se encontró ningún elemento con el código dadolanzo una excepción indicando que no se encontró
+           nodo anterior del nodo siguiente al nodo anterior del elemento a eliminar finalmente decremento
+           el tamaño de la lista y cuento la cantidad de elementos eliminados con el código dado sino
+           se encontró ningún elemento con el código dado lanzo una excepción indicando que no se encontró
             ningún elemento con ese código.*/
 
 
