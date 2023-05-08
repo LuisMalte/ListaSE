@@ -73,6 +73,19 @@ public class ListDE {
         size++;
     }
 
+    /*Algoritmo para eliminar por id primero verifico si la lista está vacía si está
+     vacía lanzo una excepción indicando que la lista está vacía si la lista no está
+      vacía, verifico si la cabeza coincide con el código a eliminar si es así,
+       elimino el primer elemento y actualizo la cabeza de la listasi el primer elemento
+       no coincide, recorro la lista buscando un elemento con el código a eliminari encuentro
+        un elemento con el código a eliminar, verifico si tiene un nodo anterior y si tiene un
+         nodo siguiente. Si tiene un nodo anterior, establezco el siguiente nodo del nodo anterior
+          al siguiente nodo del elemento a eliminar. Si tiene un nodo siguiente, establezco el
+           nodo anterior del nodo siguiente al nodo anterior del elemento a eliminar final mentedecremento
+           el tamaño de la lista y cuento la cantidad de elementos eliminados con el código dadosino
+           se encontró ningún elemento con el código dadolanzo una excepción indicando que no se encontró
+            ningún elemento con ese código.*/
+
 
 
     public void deleteById(String code) throws ListException {
@@ -91,12 +104,9 @@ public class ListDE {
         NodeDE temp = head;
         while (temp != null) {
             if (temp.getData().getIdentification().equals(code)) {
-                // Verificar si el elemento a eliminar tiene un nodo anterior
-                if (temp.getPrevious() != null) {
                     temp.getPrevious().setNext(temp.getNext());
-                }
-                // Verificar si el elemento a eliminar tiene un nodo siguiente
-                if (temp.getNext() != null) {
+
+                 if (temp.getNext() != null) {
                     temp.getNext().setPrevious(temp.getPrevious());
                 }
                 size--;
