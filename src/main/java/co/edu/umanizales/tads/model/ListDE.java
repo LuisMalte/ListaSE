@@ -73,6 +73,8 @@ public class ListDE {
         size++;
     }
 
+    //Eliminar kamikaze por ID
+
     /*Algoritmo para eliminar por id primero verifico si la lista está vacía si está
      vacía lanzo una excepción indicando que la lista está vacía si la lista no está
       vacía, verifico si la cabeza coincide con el código a eliminar si es así,
@@ -89,6 +91,9 @@ public class ListDE {
             ningún elemento con ese código.*/
 
 
+
+
+  //Eliminar kamikaze por ID
 
     public void deleteById(String code) throws ListException {
         if (head == null) throw new ListException("ERROR: La lista está vacía");
