@@ -6,7 +6,7 @@ import lombok.Data;
 import jakarta.validation.constraints.*;
 
 @Data
-@AllArgsConstructor
+
 public class Pet {
 
     private String identification;
@@ -16,6 +16,19 @@ public class Pet {
     private String species;
     private byte age;
     private Location location;
+    private boolean dirty;
+
+    public Pet(String identification, String nameOwner, String name, char sex, String species, byte age, Location location) {
+        this.identification = identification;
+        this.nameOwner = nameOwner;
+        this.name = name;
+        this.sex = sex;
+        this.species = species;
+        this.age = age;
+        this.location = location;
+        dirty = true;
+
+    }
 
 
 }

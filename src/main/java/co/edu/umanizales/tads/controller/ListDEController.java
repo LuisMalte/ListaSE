@@ -45,7 +45,7 @@ public class ListDEController {
 
     /*@PostMapping(path = "/add")
     public ResponseEntity<ResponseDTO> add( @RequestBody Pet pet) {
-        listDEService.getPets().add(pet);
+        listDEService.getPetCircular().add(pet);
         return new ResponseEntity<>(new ResponseDTO(200, "Mascota adicionada", null),
                 HttpStatus.OK);
 

@@ -71,7 +71,7 @@ public class ListDE {
         }
         head = newNode;
         size++;
-    }
+    }   
 
     //Eliminar kamikaze por ID
 
