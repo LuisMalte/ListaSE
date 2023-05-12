@@ -139,7 +139,7 @@ public class ListDEirCircularController {
 
 
         return new ResponseEntity<>(new ResponseDTO(
-                200, "Ahora todos las mascotas están limpias" , null), HttpStatus.OK);
+                200, "Ahora todas las mascotas están limpias" , null), HttpStatus.OK);
 
 
     }
