@@ -229,7 +229,7 @@ Al final de vuelvo el numero aleatorio para poder en el controller decir que mas
                 if (temp.getData().isDirty()){
                     temp.getData().setDirty(false);
                 }else {
-                    throw new ListException("La mascota de nombre: "+ temp.getData().getName() +" y de id "+
+                    throw new ListException("La mascota de nombre: "+ temp.getData().getName() +" y de id: "+
                             temp.getData().getIdentification()+ " ya esta bañada ");
 
                 }
@@ -246,7 +246,7 @@ Al final de vuelvo el numero aleatorio para poder en el controller decir que mas
                 if (temp.getData().isDirty()){
                     temp.getData().setDirty(false);
                 }else {
-                    throw new ListException("La mascota de nombre: "+ temp.getData().getName() +"y de id "+
+                    throw new ListException("La mascota de nombre: "+ temp.getData().getName() +" y de id: "+
                             temp.getData().getIdentification()+ " ya esta bañada ");
 
                 }
