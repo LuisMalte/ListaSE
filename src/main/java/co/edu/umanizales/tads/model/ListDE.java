@@ -171,11 +171,11 @@ public class ListDE {
             addToStart(pet);
         } else {
             NodeDE temp = head;
-            int cont = 1;
-            while (temp != null && cont < position - 1) {
+            int count = 1;
+            while (temp != null && count < position - 1) {
 
                 temp = temp.getNext();
-                cont++;
+                count++;
             }
 
             if (temp != null) {
@@ -184,14 +184,14 @@ public class ListDE {
                 NodeDE newNode = new NodeDE(pet);
                 newNode.setNext(temp.getNext());
                 newNode.setPrevious(temp);
-                if (temp.getNext() != null) {
-                    temp.getNext().setPrevious(newNode);
-                }
+                temp.getNext().setPrevious(newNode);
                 temp.setNext(newNode);
 
             } else {
                 add(pet);
             }
+
+            size++;
         }
     }
 

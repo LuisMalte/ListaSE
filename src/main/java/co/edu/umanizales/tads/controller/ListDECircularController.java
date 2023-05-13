@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/listcircular")
-public class ListDEirCircularController {
+public class ListDECircularController {
 
     @Autowired
     private ListDECircularService listDECircularService ;
@@ -98,8 +98,8 @@ public class ListDEirCircularController {
     }
 
     @GetMapping(path = "/bathepets/{letter}" )
-    public ResponseEntity<ResponseDTO> bathePets(@PathVariable char letter) throws ListException {
-        int num=0;
+    public ResponseEntity<ResponseDTO> bathePets(@PathVariable char letter)  {
+        int num;
         try {
 
            num= listDECircularService.getPetCircular().bathePets(letter);
@@ -160,6 +160,18 @@ public class ListDEirCircularController {
         return new ResponseEntity<>(new ResponseDTO(
                 200, "Ahora todos las mascotas están sucias" , null), HttpStatus.OK);
 
+
+    }
+
+    @PostMapping(path = "/addtoposition/{position}")
+    public ResponseEntity<ResponseDTO> addInPosition(@RequestBody Pet pet, @PathVariable int position)  {
+        try {
+            listDECircularService.getPetCircular().addInPosition(position,pet);
+        } catch (ListException e) {
+            return new ResponseEntity<>(new ResponseDTO(409, e.getMessage(), null), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new ResponseDTO(200, "Mascota adicionada en la posición "+position , null),
+                HttpStatus.OK);
 
     }
 
