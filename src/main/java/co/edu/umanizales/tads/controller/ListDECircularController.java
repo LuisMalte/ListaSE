@@ -100,6 +100,8 @@ public class ListDECircularController {
     @GetMapping(path = "/bathepets/{letter}" )
     public ResponseEntity<ResponseDTO> bathePets(@PathVariable char letter)  {
         int num;
+        char letterLower = Character.toLowerCase(letter);
+
         try {
 
            num= listDECircularService.getPetCircular().bathePets(letter);
@@ -115,9 +117,19 @@ public class ListDECircularController {
                     200, "Se baño la primera mascota de la lista ", null), HttpStatus.OK);
 
 
-        }else {
-            return new ResponseEntity<>(new ResponseDTO(
-                    200, "Se baño la mascota numero " + num +" partiendo desde la cabeza hacia "+letter , null), HttpStatus.OK);
+        } else {
+            if (letterLower=='r'){
+                return new ResponseEntity<>(new ResponseDTO(
+                        200, "Se baño la mascota numero " + num +" partiendo desde la cabeza hacia la derecha" , null), HttpStatus.OK);
+
+            }
+            else
+            {
+                return new ResponseEntity<>(new ResponseDTO(
+                        200, "Se baño la mascota numero " + num +" partiendo desde la cabeza hacia la izquierda " , null), HttpStatus.OK);
+            }
+
+
 
         }
 

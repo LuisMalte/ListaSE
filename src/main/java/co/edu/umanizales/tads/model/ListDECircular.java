@@ -175,19 +175,19 @@ Creo un método que recibirá un chart y devolverá un int
 Hago que mi método no le importe si el char es mayúsculas o minúsculas
 Creo e igualo temp a la cabeza
 Reviso que la lista no este vacía en caso de estarlo lanzo una excepción
-También reviso que el char que se agregué sea solamente f (foward ) o b  (back) en caso de no serlo lanzo una excepción
+También reviso que el char que se agregué sea solamente r (right ) o l (left) en caso de no serlo lanzo una excepción
 Luego selecciono un numero aleatorio que este entre el el tamaño de la lista asegurándome que también pueda tomar la cabeza y el ultimo numero de la lista
 si el número es 1
 Entonces es porque es a la cabeza que hay que limpiar así que no importa si es B o F entonces solo le cambio el valor del bolean de sucio verdadero a falso
 Si no es hacia
-Reviso si lo que usuario mando es F
-Si es f entonces
+Reviso si lo que usuario mando es R
+Si es R entonces
 Hago un bucle while que en cada giro pasara al siguiente temp y le sumara 1 aun contador y el bucle parara hasta que el contador sea igual al numero aleatorio
 Cuando se pare el bucle
 Tomo el temp que quedo y miro si esta sucio o no y si esta sucio le cambio bolean a false para decir que ya no esta sucio
 Y si no esta sucio entonces lanzo una excepción diciendo que ya este bañado
-Si no es f entonces
-Hago lo mismo que hice con f pero con la diferencia que adentro del bucle while mi temp no ira hacia delante si no hacia atrás
+Si no es R entonces
+Hago lo mismo que hice con R pero con la diferencia que adentro del bucle while mi temp no ira hacia delante si no hacia atrás
 
 Al final de vuelvo el numero aleatorio para poder en el controller decir que mascota limpie
 */
@@ -198,8 +198,8 @@ Al final de vuelvo el numero aleatorio para poder en el controller decir que mas
 
         if(temp==null) throw new ListException("ERROR: No hay perros para bañar ");
 
-        if(start != 'b' && start != 'f'){
-            throw new ListException("ERROR: tiene que ingresar f (forward) o B (back)");
+        if(start != 'r' && start != 'l'){
+            throw new ListException("ERROR: tiene que ingresar R (right) o  L (left)");
         }
 
 
@@ -216,7 +216,7 @@ Al final de vuelvo el numero aleatorio para poder en el controller decir que mas
 
         }else{
             int count = 1;
-            if (start=='f'){
+            if (start=='r'){
 
 
                 while (count != num){
